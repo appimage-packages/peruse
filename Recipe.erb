@@ -135,7 +135,7 @@ EXTERNAL="${external_options[0]}"
 EXTERNAL_ADDRESS="${external_options[1]}"
 EXTERNAL_CMAKE="${external_options[2]}"
 EXTERNAL_CONFIGURE="${external_options[3]}"
-if ( $EXTERNAL )
+if ( $EXTERNAL != null )
 then
     build_external $EXTERNAL
 fi
