@@ -51,6 +51,6 @@ appimage.depends = 'unrar-devel zlib-devel python.x86_64'
 #Needed to add ability to pull in external builds that are simply to old
 #in Centos.
 #appimage.external = 'libarchive,https://github.com/libarchive/libarchive,true,""'
-appimage.frameworks = 'karchive kconfig kwidgetsaddons kcompletion kcoreaddons kauth kcodecs kdoctools ki18n kguiaddons kconfigwidgets kitemviews kiconthemes kjobwidgets kservice solid kxmlgui kbookmarks kio kpackage kfilemetadata kdeclarative baloo plasma-integration'
+appimage.frameworks = 'karchive kconfig kwidgetsaddons kcompletion kcoreaddons kauth kcodecs kdoctools ki18n kguiaddons kconfigwidgets kitemviews kiconthemes kjobwidgets kcrash kservice solid kxmlgui kbookmarks kio kpackage kfilemetadata kdeclarative baloo plasma-integration'
 appimage.apps = [Recipe::App.new("#{appimage.name}")]
 File.write('Recipe', appimage.render)
