@@ -135,7 +135,9 @@ EXTERNAL="${external_options[0]}"
 EXTERNAL_ADDRESS="${external_options[1]}"
 EXTERNAL_CMAKE="${external_options[2]}"
 EXTERNAL_CONFIGURE="${external_options[3]}"
-build_external $EXTERNAL
+if ( $EXTERNAL )
+    build_external $EXTERNAL
+fi
 
 function build_framework
 { (
