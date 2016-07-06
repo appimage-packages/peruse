@@ -53,6 +53,6 @@ appimage.depends = 'unrar-devel zlib-devel polkit-devel libattr-devel lmdb-devel
 #in Centos.
 #appimage.external = 'libarchive,https://github.com/libarchive/libarchive,true,""'
 appimage.wayland = true
-appimage.frameworks = 'karchive kconfig kwidgetsaddons kcompletion kcoreaddons kauth polkit-qt-1 kcodecs kdoctools ki18n kguiaddons kconfigwidgets kitemviews kiconthemes kjobwidgets kwindowsystem knotifications kcrash kdbusaddons kservice solid sonnet ktextwidgets attica kglobalaccel kxmlgui kbookmarks kio kpackage kfilemetadata kdeclarative kidletime plasma-integration'
+appimage.frameworks = 'karchive kconfig kwidgetsaddons kcompletion kcoreaddons kauth polkit-qt-1 kcodecs kdoctools ki18n kguiaddons kconfigwidgets kitemviews kiconthemes kjobwidgets kwindowsystem knotifications kcrash kdbusaddons kservice solid sonnet ktextwidgets attica kglobalaccel kxmlgui kbookmarks kio kpackage kfilemetadata kdeclarative kidletime kwayland plasma-integration'
 appimage.apps = [Recipe::App.new("#{appimage.name}")]
 File.write('Recipe', appimage.render)
