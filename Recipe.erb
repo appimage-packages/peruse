@@ -151,6 +151,12 @@ function build_wayland
 
     mkdir -p $WLD/share/aclocal # needed by autotools
     
+    #autoconf is too old on centos6
+    git clone git://git.sv.gnu.org/autoconf
+    cd autoconf
+    ./configure --prefix=$WLD
+    make -j8
+    make install
     #wayland
     git clone git://anongit.freedesktop.org/wayland/$WAYLAND
     cd $WAYLAND
