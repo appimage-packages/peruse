@@ -188,7 +188,7 @@ function build_boost
     bzip2 -d boost_1_61_0.tar.bz2
     tar xvf boost_1_61_0.tar
     cd boost_1_61_0
-    ./bootstrap.sh --prefix=/app/usr/
+    ./bootstrap.sh --prefix=/app/usr
     ./b2 install
 ) }
 if ( <%= boost %> == true )
@@ -286,7 +286,7 @@ for FRAMEWORK in <%= frameworks %>; do
   build_framework $FRAMEWORK
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
-build_framework kactivities -DBOOST_ROOT=/app/usr
+build_framework kactivities -DBOOST_ROOT=/app/usr/boost
 build_framework plasma-framework
 
 
