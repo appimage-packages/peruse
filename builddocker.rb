@@ -67,11 +67,11 @@ class CI
                 STDOUT.flush
             end
         end
-#         @c.start('Binds' => ["/var/lib/jenkins/workspace/appimage-peruse:/in",
-#                              "/var/lib/jenkins/workspace/appimage-peruse/out:/out"]) 
+        @c.start('Binds' => ["/var/lib/jenkins/workspace/appimage-peruse:/in",
+                             "/var/lib/jenkins/workspace/appimage-peruse/out:/out"]) 
         #local
-        @c.start('Binds' => ["/home/scarlett/appimage-packaging/peruse-packaging:/in",
-                             "/home/scarlett/appimage-packaging/peruse-packaging/out:/out"])     
+#         @c.start('Binds' => ["/home/scarlett/appimage-packaging/peruse-packaging:/in",
+#                              "/home/scarlett/appimage-packaging/peruse-packaging/out:/out"])     
         ret = @c.wait
         status_code = ret.fetch('StatusCode', 1)
         raise "Bad return #{ret}" if status_code != 0
