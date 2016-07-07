@@ -23,7 +23,7 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 . ./functions.sh
 rm -f functions.sh
 
-yum -y install gettext perl-URI.noarch zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto libXcursor-devel python-devel
+yum -y install gettext perl-URI.noarch zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto libXcursor-devel python-devel libxml2-devel bzip2-devel libxslt-devel
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7
@@ -282,10 +282,12 @@ build_framework extra-cmake-modules
 #Cmake is too old on centos6.... so does this mean no sound for KDE apps? blech.
 #build_framework phonon -DPHONON_BUILD_PHONON4QT5=ON
 
-for FRAMEWORK in karchive kconfig kwidgetsaddons kcompletion kcoreaddons kauth polkit-qt-1 kcodecs kdoctools ki18n kguiaddons kconfigwidgets kitemviews kiconthemes kjobwidgets kwindowsystem knotifications kcrash kdbusaddons kservice solid sonnet ktextwidgets attica kglobalaccel kxmlgui kbookmarks kio kpackage kfilemetadata kdeclarative kidletime kwayland kdecoration breeze plasma-integration kactivities plasma-framework; do
+for FRAMEWORK in karchive kconfig kwidgetsaddons kcompletion kcoreaddons kauth polkit-qt-1 kcodecs kdoctools ki18n kguiaddons kconfigwidgets kitemviews kiconthemes kjobwidgets kwindowsystem knotifications kcrash kdbusaddons kservice solid sonnet ktextwidgets attica kglobalaccel kxmlgui kbookmarks kio kpackage kfilemetadata kdeclarative kidletime kwayland kdecoration breeze plasma-integration; do
   build_framework $FRAMEWORK
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
+build_framework kactivities -DBOOST_ROOT=/app/usr/include
+build_framework plasma-framework
 
 
     
