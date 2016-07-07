@@ -164,41 +164,36 @@ function build_wayland
     ./autogen.sh --prefix=$WLD
     make -j8
     make install
-    cd ..
-#     #wayland-protocols
-#     git clone git://anongit.freedesktop.org/wayland/wayland-protocols
-#     cd wayland-protocols
-#     ./autogen.sh --prefix=$WLD
-#     make install
-#     cd ..
-#     #mesa
-#     git clone git://anongit.freedesktop.org/mesa/mesa
-#     cd mesa
-#     ./autogen.sh --prefix=$WLD --enable-gles2 \
-#     --with-egl-platforms=x11,wayland,drm --enable-gbm --enable-shared-glapi \
-#     --with-gallium-drivers=r300,r600,swrast,nouveau
-#     make -j8
-#     make install
-#     cd ..
-#     #libunwind
-#     git clone git://git.sv.gnu.org/libunwind
-#     cd libunwind
-#     autoreconf -i
-#     ./configure --prefix=$WLD
-#     make -j8
-#     make install
-#     cd ..
-#     #libinput
-#     git clone git://anongit.freedesktop.org/wayland/libinput
-#     cd libinput
-#     ./autogen.sh --prefix=$WLD
-#     make -j8
-#     make install
-#     cd ..    
+    cd .. 
 ) }
 if ( <%= wayland %> == true )
 then
     build_wayland wayland
+fi
+
+function build_boost
+{ (
+     # errors fatal
+    echo "Compiler version:" $(g++ --version)
+    set -e
+
+    SRC=/boost
+
+    BOOST=$1
+    # clone if not there
+    mkdir -p $SRC
+    cd $SRC
+    
+    wget https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2
+    bzip2 -d boost_1_61_0.tar.bz2
+    tar xvf boost_1_61_0.tar
+    cd boost_1_61_0
+    ./bootstrap.sh --prefix=/app/usr/
+    ./b2 install
+) }
+if ( <%= boost %> == true )
+then
+    build_boost boost
 fi
 
 IN=<%= external %> 

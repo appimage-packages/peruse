@@ -23,7 +23,7 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 . ./functions.sh
 rm -f functions.sh
 
-yum -y install gettext perl-URI.noarch unrar-devel zlib-devel python.x86_64
+yum -y install gettext perl-URI.noarch zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto libXcursor-devel python-devel
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7
@@ -67,7 +67,7 @@ fi
 cd /peruse/
 git submodule init
 git submodule update
-git_pull_rebase_helper
+#git_pull_rebase_helper
 
 # Prepare the install location
 rm -rf /app/ || true
@@ -129,13 +129,83 @@ function build_external
     make install
 ) }
 
-IN= 
+function build_wayland
+{ (
+ # errors fatal
+    echo "Compiler version:" $(g++ --version)
+    set -e
+
+    SRC=/wayland
+
+    WAYLAND=$1
+    # clone if not there
+    mkdir -p $SRC
+    cd $SRC
+
+    export WLD=/app/usr/   # change this to another location if you prefer
+    export LD_LIBRARY_PATH=$WLD/lib
+    export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
+    export PATH=$WLD/bin:$PATH
+    export ACLOCAL_PATH=$WLD/share/aclocal
+    export ACLOCAL="aclocal -I $ACLOCAL_PATH"
+
+    mkdir -p $WLD/share/aclocal # needed by autotools
+    
+    #autoconf is too old on centos6
+    wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
+    tar xvfvz autoconf-2.69.tar.gz
+    cd autoconf-2.69
+    ./configure --prefix=$WLD
+    make -j8
+    make install
+    #wayland
+    git clone git://anongit.freedesktop.org/wayland/$WAYLAND
+    cd $WAYLAND
+    ./autogen.sh --prefix=$WLD
+    make -j8
+    make install
+    cd .. 
+) }
+if ( true == true )
+then
+    build_wayland wayland
+fi
+
+function build_boost
+{ (
+     # errors fatal
+    echo "Compiler version:" $(g++ --version)
+    set -e
+
+    SRC=/boost
+
+    BOOST=$1
+    # clone if not there
+    mkdir -p $SRC
+    cd $SRC
+    
+    wget https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2
+    bzip2 -d boost_1_61_0.tar.bz2
+    tar xvf boost_1_61_0.tar
+    cd boost_1_61_0
+    ./bootstrap.sh --prefix=/app/usr/
+    ./b2 install
+) }
+if ( true == true )
+then
+    build_boost boost
+fi
+
+IN=libarchive,https://github.com/libarchive/libarchive,true,"" 
 IFS=',' read -a external_options <<< $IN
 EXTERNAL="${external_options[0]}"
 EXTERNAL_ADDRESS="${external_options[1]}"
 EXTERNAL_CMAKE="${external_options[2]}"
 EXTERNAL_CONFIGURE="${external_options[3]}"
-build_external $EXTERNAL
+if ( $EXTERNAL != null )
+then
+    build_external $EXTERNAL
+fi
 
 function build_framework
 { (
@@ -212,7 +282,7 @@ build_framework extra-cmake-modules
 #Cmake is too old on centos6.... so does this mean no sound for KDE apps? blech.
 #build_framework phonon -DPHONON_BUILD_PHONON4QT5=ON
 
-for FRAMEWORK in baloo karchive kconfig kwidgetsaddons kcompletion kcoreaddons kauth kcodecs kdoctools ki18n kconfigwidgets kitemviews kiconthemes kjobwidgets kservice solid kxmlgui kbookmarks kio kpackage kfilemetadata kdeclarative plasma-integration; do
+for FRAMEWORK in karchive kconfig kwidgetsaddons kcompletion kcoreaddons kauth polkit-qt-1 kcodecs kdoctools ki18n kguiaddons kconfigwidgets kitemviews kiconthemes kjobwidgets kwindowsystem knotifications kcrash kdbusaddons kservice solid sonnet ktextwidgets attica kglobalaccel kxmlgui kbookmarks kio kpackage kfilemetadata kdeclarative kidletime kwayland kdecoration breeze plasma-integration kactivities plasma-framework; do
   build_framework $FRAMEWORK
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
