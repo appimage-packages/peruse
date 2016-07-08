@@ -286,10 +286,12 @@ for FRAMEWORK in <%= frameworks %>; do
   build_framework $FRAMEWORK
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
-build_framework kactivities -DBoost_NO_BOOST_CMAKE=TRUE \
+build_framework kactivities -DCMAKE_INSTALL_PREFIX:PATH=/app/usr/ \
+    -DBoost_NO_BOOST_CMAKE=TRUE \
     -DBoost_NO_SYSTEM_PATHS=TRUE \
-    -DBOOST_ROOT:PATHNAME=/app/usr/ \
-    -DBoost_LIBRARY_DIRS:FILEPATH=/app/usr/lib
+    -DBOOST_ROOT:PATH=/app/usr/ \
+    -DBoost_LIBRARY_DIRS:PATH=/app/usr/lib \
+    -DBoost_INCLUDE_DIRS:PATH=/app/usr/include
 build_framework plasma-framework
 
 
