@@ -50,6 +50,7 @@ cd  /
 
 # TO-DO ask about this.
 export CMAKE_PREFIX_PATH=$QTDIR:/app/share/llvm/
+export CMAKE_INCLUDE_PATH=$CMAKE_INCLUDE_PATH:/app/usr/include
 
 # if the library path doesn't point to our usr/lib, linking will be broken and we won't find all deps either
 export LD_LIBRARY_PATH=/usr/lib64/:/usr/lib:/app/usr/lib:$QTDIR/lib/:/opt/python3.5/lib/:$LD_LIBRARY_PATH
@@ -185,8 +186,7 @@ function build_boost
     cd $SRC
     
     wget https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2
-    bzip2 -d boost_1_61_0.tar.bz2
-    tar xsvf boost_1_61_0.tar
+    tar --bzip2 -xf boost_1_61_0.tar.bz2
     cd boost_1_61_0
     ./bootstrap.sh --prefix=/app/usr
     ./b2 install
@@ -290,7 +290,7 @@ build_framework kactivities -DBoost_NO_SYSTEM_PATHS=ON \
     -DBoost_NO_BOOST_CMAKE=ON \
     -DBOOST_ROOT=/app/usr/ \
     -DBOOST_INCLUDEDIR=/app/usr/include \
-    -DBOOST_LIBRARYDIR=/app/usr/lib
+    -DBOOST_LIBRARYDIR=/app/usr/lib 
 build_framework plasma-framework
 
 
