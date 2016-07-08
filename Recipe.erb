@@ -186,7 +186,7 @@ function build_boost
     
     wget https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2
     bzip2 -d boost_1_61_0.tar.bz2
-    tar xvf boost_1_61_0.tar
+    tar xdsvf boost_1_61_0.tar
     cd boost_1_61_0
     ./bootstrap.sh --prefix=/app/usr
     ./b2 install
@@ -271,7 +271,7 @@ EOF
     cmake $SRC/$FRAMEWORK -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX $2 $3 $4 $5 $6 $7
 
     # make
-    make -j8 -I/app/usr/include
+    make VERBOSE=1 -j8 -I/app/usr/include
 
     # install
     make install
