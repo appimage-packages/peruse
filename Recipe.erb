@@ -237,7 +237,7 @@ function build_framework
 	cd $FRAMEWORK
         echo "patching knotifications"
 	git reset --hard        
-	cat > no_phonon.patch << EOF
+	cat > no_phonon.patch << 'EOF'
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index b97425f..8f15f08 100644
 --- a/CMakeLists.txt
@@ -264,7 +264,7 @@ EOF
     cd $FRAMEWORK
         echo "patching kactivities"
     git reset --hard
-    cat > set_boost.patch << EOF
+    cat > set_boost.patch << 'EOF'
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
 index 81b5bdf..9a0c72b 100644
 --- a/src/CMakeLists.txt
