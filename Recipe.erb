@@ -186,7 +186,7 @@ function build_boost
     
     wget https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2
     bzip2 -d boost_1_61_0.tar.bz2
-    tar xdsvf boost_1_61_0.tar
+    tar xsvf boost_1_61_0.tar
     cd boost_1_61_0
     ./bootstrap.sh --prefix=/app/usr
     ./b2 install
