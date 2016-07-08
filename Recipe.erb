@@ -260,7 +260,29 @@ EOF
 	cat no_phonon.patch |patch -p1
 	cd ..
     fi
-
+    
+    if [ "$FRAMEWORK" = "kactivities" ]; then
+    cd $FRAMEWORK
+        echo "patching kactivities"
+    git reset --hard
+    cat > set_boost.patch << EOF
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 81b5bdf..9a0c72b 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -32,6 +32,7 @@ if (NOT KACTIVITIES_LIBRARY_ONLY)
+    include_directories (
+       ${CMAKE_CURRENT_BINARY_DIR}
+       ${CMAKE_CURRENT_SOURCE_DIR}
++      ${Boost_INCLUDE_DIRS}
+       )
+    add_subdirectory (imports)
+ endif ()
+EOF
+    cat set_boost.patch |patch -p1
+    cd ..
+    fi    
+    
     # create build dir
     mkdir -p $BUILD/$FRAMEWORK
 
@@ -286,11 +308,7 @@ for FRAMEWORK in <%= frameworks %>; do
   build_framework $FRAMEWORK
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
-build_framework kactivities -DBoost_NO_SYSTEM_PATHS=ON \
-    -DBoost_NO_BOOST_CMAKE=ON \
-    -DBOOST_ROOT=/app/usr/ \
-    -DBOOST_INCLUDEDIR=/app/usr/include \
-    -DBOOST_LIBRARYDIR=/app/usr/lib 
+build_framework kactivities -DBOOST_ROOT=/app/usr/
 build_framework plasma-framework
 
 
