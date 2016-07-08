@@ -271,7 +271,7 @@ EOF
     cmake $SRC/$FRAMEWORK -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX $2 $3 $4 $5 $6 $7
 
     # make
-    make -j8
+    make -j8 -I/app/usr/include
 
     # install
     make install
@@ -287,6 +287,7 @@ for FRAMEWORK in <%= frameworks %>; do
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
 build_framework kactivities -DBoost_NO_SYSTEM_PATHS=ON \
+    -DBoost_NO_BOOST_CMAKE=ON \
     -DBOOST_ROOT=/app/usr/ \
     -DBOOST_INCLUDEDIR=/app/usr/include \
     -DBOOST_LIBRARYDIR=/app/usr/lib
