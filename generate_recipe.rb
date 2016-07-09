@@ -50,7 +50,7 @@ appimage = Recipe.new
 appimage.name = "peruse"
 appimage.version = '16.04.1'
 #TO_DO do some LD magic here? kdev-tools cmake parser?
-appimage.depends = 'zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto libXcursor-devel python-devel libxml2-devel bzip2-devel libxslt-devel'
+appimage.depends = 'zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto libXcursor-devel python-devel libxml2-devel bzip2-devel libxslt-devel xz-devel'
 #Needed to add ability to pull in external builds that are simply to old
 #in Centos.
 appimage.external = 'libarchive,https://github.com/libarchive/libarchive,true,""'
