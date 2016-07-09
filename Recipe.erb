@@ -128,6 +128,16 @@ function build_external
     # install
     make install
 ) }
+IN=<%= external %> 
+IFS=',' read -a external_options <<< $IN
+EXTERNAL="${external_options[0]}"
+EXTERNAL_ADDRESS="${external_options[1]}"
+EXTERNAL_CMAKE="${external_options[2]}"
+EXTERNAL_CONFIGURE="${external_options[3]}"
+if ( $EXTERNAL != null )
+then
+    build_external $EXTERNAL
+fi
 
 function build_wayland
 { (
@@ -193,17 +203,6 @@ function build_boost
 if ( <%= boost %> == true )
 then
     build_boost boost
-fi
-
-IN=<%= external %> 
-IFS=',' read -a external_options <<< $IN
-EXTERNAL="${external_options[0]}"
-EXTERNAL_ADDRESS="${external_options[1]}"
-EXTERNAL_CMAKE="${external_options[2]}"
-EXTERNAL_CONFIGURE="${external_options[3]}"
-if ( $EXTERNAL != null )
-then
-    build_external $EXTERNAL
 fi
 
 function build_framework
