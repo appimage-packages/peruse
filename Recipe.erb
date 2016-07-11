@@ -69,6 +69,31 @@ git submodule init
 git submodule update
 #git_pull_rebase_helper
 
+cat > force-c99.patch << 'EOF'
+diff --git a/src/qtquick/karchive-rar/external/CMakeLists.txt b/src/qtquick/karchive-rar/external/CMakeLists.txt
+index 19774fc..ae2a8a2 100644
+--- a/src/qtquick/karchive-rar/external/CMakeLists.txt
++++ b/src/qtquick/karchive-rar/external/CMakeLists.txt
+@@ -26,7 +26,7 @@ find_package(ZLIB)
+ # find_package(BZip2)
+ 
+ if (UNIX OR MINGW)
+-    add_compile_options(-fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -fPIC)
++    add_compile_options(-std=gnu99 -fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -fPIC)
+ endif (UNIX OR MINGW)
+ 
+ #sources
+@@ -93,4 +93,4 @@ if (ZLIB_FOUND)
+     add_definitions(-DHAVE_ZLIB)
+ endif(ZLIB_FOUND)
+ 
+-set_target_properties(unarr PROPERTIES C_STANDARD 99)
++# set_target_properties(unarr PROPERTIES C_STANDARD 99)
+EOF
+cat force-c99.patch |patch -p1
+cd ..
+
+
 # Prepare the install location
 rm -rf /app/ || true
 mkdir -p /app/usr
