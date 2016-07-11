@@ -463,6 +463,9 @@ mv ../app/* $APP.AppDir/
 VERSION="git"
 ARCH=$(arch)
 
+if [ -e /out/$APP-$VERSION-$ARCH.AppImage ] ; then
+  rm /out/$APP-$VERSION-$ARCH.AppImage
+fi
 #TO-DO this will need some text manipulation in ruby to get this var.
 /AppImageKit/AppImageAssistant.AppDir/package <%= proper_name %>.AppDir/ /out/$APP-$VERSION-$ARCH.AppImage
 
