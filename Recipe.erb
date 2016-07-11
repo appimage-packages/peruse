@@ -51,9 +51,6 @@ cd  /
 # TO-DO ask about this.
 export CMAKE_PREFIX_PATH=$QTDIR:/app/share/llvm/
 
-#QML 
-export QML2_IMPORT_PATH=/usr/local/Qt-5.7.0/qml
-
 # if the library path doesn't point to our usr/lib, linking will be broken and we won't find all deps either
 export LD_LIBRARY_PATH=/usr/lib64/:/usr/lib:/app/usr/lib:$QTDIR/lib/:/opt/python3.5/lib/:$LD_LIBRARY_PATH
 
@@ -419,7 +416,7 @@ export APPIMAGE_ORIGINAL_QT_PLUGIN_PATH=\$QT_PLUGIN_PATH
 export APPIMAGE_ORIGINAL_XDG_DATA_DIRS=\$XDG_DATA_DIRS
 export APPIMAGE_ORIGINAL_PATH=\$PATH
 
-export QML2_IMPORT_PATH=\$DIR/usr/lib/qml:\$QML2_IMPORT_PATH
+export QML2_IMPORT_PATH=\$DIR/usr/local/Qt-5.7.0/qml:\$DIR/usr/lib/qml:\$QML2_IMPORT_PATH
 export LD_LIBRARY_PATH=\$DIR/usr/lib/:\$LD_LIBRARY_PATH
 export QT_PLUGIN_PATH=\$DIR/usr/lib/qt5/plugins/
 export XDG_DATA_DIRS=\$DIR/usr/share/:\$XDG_DATA_DIRS
@@ -437,7 +434,7 @@ EOF
 chmod +x AppRun
 
 cp usr/share/applications/org.kde.<%= name %>.desktop <%= name %>.desktop
-cp /<%= name %>/data/drawable/<%= name %>.png .
+cp /<%= name %>/data/drawable/<%= name %>.png <%= name %>.png
 
 #TO-DO this will need some text manipulation in ruby to get this var.
 APP=<%= proper_name %>
