@@ -48,6 +48,7 @@ end
 
 appimage = Recipe.new
 appimage.name = "peruse"
+appimage.proper_name = appimage.name.capitalize
 appimage.version = '16.04.1'
 #TO_DO do some LD magic here? kdev-tools cmake parser?
 appimage.depends = 'zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto libXcursor-devel python-devel libxml2-devel bzip2-devel libxslt-devel xz-devel'
