@@ -440,7 +440,7 @@ cp usr/share/applications/org.kde.<%= name %>.desktop <%= name %>.desktop
 cp /<%= name %>/data/drawable/<%= name %>.png .
 
 #TO-DO this will need some text manipulation in ruby to get this var.
-APP=APP=<%= proper_name %>
+APP=<%= proper_name %>
 LOWERAPP=<%= name %>
 
 get_desktopintegration <%= name %>
