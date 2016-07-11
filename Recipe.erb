@@ -318,7 +318,7 @@ cmake ../<%= name %> \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DPACKAGERS_BUILD=1 \
     -DBUILD_TESTING=FALSE
-make -j8 install
+make VERBOSE=1 -j8 install
 
 ###############################################################
 # Build complete, AppImage bundling begins here
