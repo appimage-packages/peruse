@@ -358,7 +358,7 @@ PLUGINS=$(dirname $QTDIR/plugins/bearer)
 QMLDIR=$(dirname $QTDIR/qml)
 
 cp -r $PLUGINS/{bearer,generic,imageformats,platforms,iconengines,platforminputcontexts,xcbglintegrations} ./usr/lib/qt5/plugins/
-cp -r $PLUGINS/platformthemes ./usr/lib/qt5/plugins/
+#cp -r $PLUGINS/platformthemes ./usr/lib/qt5/plugins/
 
 # FIXME: Easy way to determine QML?
 cp -r $QMLDIR/QtQuick ./usr/lib/qml/
