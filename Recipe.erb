@@ -347,7 +347,7 @@ for FRAMEWORK in <%= frameworks %>; do
   build_framework $FRAMEWORK
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
-build_framework kactivities -DBOOST_ROOT=/app/usr/
+build_framework kactivities -DBOOST_ROOT=/app/usr -DBoost_NO_SYSTEM_PATHS=ON
 build_framework plasma-framework
 
 # support for okular, and okular itself (for epub, pdf et al support)
