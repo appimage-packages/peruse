@@ -283,6 +283,13 @@ function build_framework
     # framework
     FRAMEWORK=$1
 
+    # branch, optional parameter
+    BRANCH=""
+    if [[ $2 == "branch" ]];
+    then
+        BRANCH=$3
+    fi
+
     # clone if not there
     mkdir -p $SRC
     cd $SRC
@@ -296,7 +303,14 @@ function build_framework
     else
         git clone git://anongit.kde.org/$FRAMEWORK
     fi
-    
+
+    if( test -n $BRANCH )
+    then
+        cd $FRAMEWORK
+        git checkout $BRANCH
+        cd ..
+    fi
+
     if [ "$FRAMEWORK" = "knotifications" ]; then
 	cd $FRAMEWORK
         echo "patching knotifications"
@@ -353,7 +367,12 @@ EOF
     cd $BUILD/$FRAMEWORK
 
     # cmake it
-    cmake $SRC/$FRAMEWORK -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX $2 $3 $4 $5 $6 $7
+    if [[ $2 == "branch" ]];
+    then
+        cmake $SRC/$FRAMEWORK -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX $4 $5 $6 $7 $8 $9
+    else
+        cmake $SRC/$FRAMEWORK -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX $2 $3 $4 $5 $6 $7
+    fi
 
     # make
     make VERBOSE=1 -j8
@@ -371,8 +390,18 @@ for FRAMEWORK in <%= frameworks %>; do
   build_framework $FRAMEWORK
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
-build_framework kactivities -DBOOST_ROOT=/app/usr/
+build_framework kactivities -DBOOST_ROOT=/app/usr -DBoost_NO_SYSTEM_PATHS=ON
 build_framework plasma-framework
+
+# support for okular, and okular itself (for epub, pdf et al support)
+build_framework kjs
+build_framework kdelibs4support
+build_framework kparts
+build_framework threadweaver
+build_framework kwallet
+build_framework khtml
+build_framework okular branch frameworks
+
 build_framework kirigami
 
 
