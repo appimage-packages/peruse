@@ -32,6 +32,7 @@ class Recipe
     attr_accessor :proper_name
     attr_accessor :depends
     attr_accessor :dependencies
+    attr_accessor :cmake
     attr_accessor :wayland
     attr_accessor :boost
     attr_accessor :version
@@ -50,6 +51,7 @@ appimage = Recipe.new
 appimage.name = "peruse"
 appimage.proper_name = appimage.name.capitalize
 appimage.version = '16.04.1'
+appimage.cmake = true
 #TO_DO do some LD magic here? kdev-tools cmake parser?
 appimage.depends = 'zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto libXcursor-devel python-devel libxml2-devel bzip2-devel libxslt-devel xz-devel'
 #Needed to add ability to pull in external builds that are simply to old
