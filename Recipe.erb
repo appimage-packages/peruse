@@ -204,6 +204,12 @@ EXTERNAL_CMAKE="${external_options[2]}"
 EXTERNAL_CONFIGURE="${external_options[3]}"
 build_external $EXTERNAL
 
+EXTERNAL=libgcrypt
+EXTERNAL_ADDRESS=git://git.gnupg.org/libgcrypt.git
+EXTERNAL_CMAKE=""
+EXTERNAL_CONFIGURE="./autogen.sh --prefix=/app/usr/"
+build_external $EXTERNAL
+
 function build_wayland
 { (
  # errors fatal
