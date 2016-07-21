@@ -293,18 +293,10 @@ function build_libsm
 
     mkdir -p $WLD/share/aclocal # needed by autotools
 
-    #autoconf is too old on centos6
-    wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
-    tar xvfvz autoconf-2.69.tar.gz
-    cd autoconf-2.69
-    ./configure --prefix=$WLD
-    make -j8
-    make install
-
     # libsm
     wget https://www.x.org/releases/X11R7.7/src/lib/libSM-1.2.1.tar.bz2
     cd libSM-1.2.1
-    ./autogen.sh --prefix=$WLD
+    ./configure --prefix=$WLD
     make -j8
     make install
     cd ..
