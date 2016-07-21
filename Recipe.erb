@@ -132,11 +132,12 @@ function build_libsm
 
     # libsm
     wget https://www.x.org/releases/X11R7.7/src/lib/libSM-1.2.1.tar.bz2
+    tar  --bzip2 -xf libSM-1.2.1.tar.bz2
     cd libSM-1.2.1
     ./configure --prefix=$WLD
     make -j8
     make install
-    cd ..
+    cd ../..
 ) }
 build_libsm
 
