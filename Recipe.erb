@@ -270,6 +270,47 @@ then
     build_boost boost
 fi
 
+# should perhaps generify this just a bit, but... with the whole thing
+# being rewritten in ruby, seems a waste ;)
+function build_libsm
+{ )
+ # errors fatal
+    echo "Compiler version:" $(g++ --version)
+    set -e
+
+    SRC=/libsm
+
+    # clone if not there
+    mkdir -p $SRC
+    cd $SRC
+
+    export WLD=/app/usr/   # change this to another location if you prefer
+    export LD_LIBRARY_PATH=$WLD/lib
+    export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
+    export PATH=$WLD/bin:$PATH
+    export ACLOCAL_PATH=$WLD/share/aclocal
+    export ACLOCAL="aclocal -I $ACLOCAL_PATH"
+
+    mkdir -p $WLD/share/aclocal # needed by autotools
+
+    #autoconf is too old on centos6
+    wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
+    tar xvfvz autoconf-2.69.tar.gz
+    cd autoconf-2.69
+    ./configure --prefix=$WLD
+    make -j8
+    make install
+
+    # libsm
+    wget https://www.x.org/releases/X11R7.7/src/lib/libSM-1.2.1.tar.bz2
+    cd libSM-1.2.1
+    ./autogen.sh --prefix=$WLD
+    make -j8
+    make install
+    cd ..
+) }
+build_libsm
+
 function build_framework
 { (
     # errors fatal
