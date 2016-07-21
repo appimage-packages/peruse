@@ -188,7 +188,7 @@ function build_external
     then
         cmake $SRC/$EXTERNAL -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX $2
     else
-        $EXTERNAL_CONFIGURE
+        eval "${EXTERNAL_CONFIGURE}"
     fi
     # make
     make -j8
@@ -207,7 +207,7 @@ build_external $EXTERNAL
 EXTERNAL=libgcrypt
 EXTERNAL_ADDRESS=git://git.gnupg.org/libgcrypt.git
 EXTERNAL_CMAKE=false
-EXTERNAL_CONFIGURE="cd /external/libgcrypt && ./autogen.sh --prefix=/app/usr/"
+EXTERNAL_CONFIGURE="cd /external/libgcrypt ; ./autogen.sh --prefix=/app/usr/"
 build_external $EXTERNAL
 
 function build_wayland
