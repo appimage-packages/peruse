@@ -23,7 +23,7 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 . ./functions.sh
 rm -f functions.sh
 
-yum -y install gettext perl-URI.noarch <%= depends %>
+yum -y install gettext libSM-devel perl-URI.noarch <%= depends %>
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7
@@ -106,40 +106,6 @@ cd  /app/usr
 ln -s lib lib64
 
 # start building the deps
-
-# should perhaps generify this just a bit, but... with the whole thing
-# being rewritten in ruby, seems a waste ;)
-function build_libsm
-{ (
- # errors fatal
-    echo "Compiler version:" $(g++ --version)
-    set -e
-
-    SRC=/libsm
-
-    # clone if not there
-    mkdir -p $SRC
-    cd $SRC
-
-    export WLD=/app/usr/   # change this to another location if you prefer
-    export LD_LIBRARY_PATH=$WLD/lib
-    export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
-    export PATH=$WLD/bin:$PATH
-    export ACLOCAL_PATH=$WLD/share/aclocal
-    export ACLOCAL="aclocal -I $ACLOCAL_PATH"
-
-    mkdir -p $WLD/share/aclocal # needed by autotools
-
-    # libsm
-    wget https://www.x.org/releases/X11R7.7/src/lib/libSM-1.2.1.tar.bz2
-    tar  --bzip2 -xf libSM-1.2.1.tar.bz2
-    cd libSM-1.2.1
-    ./configure --prefix=$WLD
-    make -j8
-    make install
-    cd ../..
-) }
-build_libsm
 
 function build_cmake
 { (
