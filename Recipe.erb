@@ -23,7 +23,7 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 . ./functions.sh
 rm -f functions.sh
 
-yum -y install gettext pkgconfig libSM-devel gpgme-devel perl-URI.noarch <%= depends %>
+yum -y install gettext libSM-devel gpgme-devel perl-URI.noarch <%= depends %>
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7
@@ -132,6 +132,11 @@ build_gnutool autoconf 2.69
 build_gnutool automake 1.15
 # ...and gettext
 build_gnutool gettext 0.19.8
+# ...and libtool
+build_gnutool libtool 2.4
+# ...and m4
+build_gnutool m4 1.4.17
+
 
 # start building the deps
 
