@@ -123,6 +123,15 @@ cd autoconf-2.69
 make -j8
 make install
 
+#automake is also too old on centos6
+wget http://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz
+tar xvfvz automake-1.15.tar.gz
+cd automake-1.15
+./configure --prefix=$WLD
+make -j8
+make install
+
+
 # start building the deps
 
 function build_cmake
