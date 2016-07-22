@@ -235,14 +235,14 @@ build_external $EXTERNAL
 EXTERNAL=libgpg-error
 EXTERNAL_ADDRESS=git://git.gnupg.org/libgpg-error.git
 EXTERNAL_CMAKE=false
-EXTERNAL_CONFIGURE="cd /external/libgpg-error ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/"
+EXTERNAL_CONFIGURE="cd /external/libgpg-error ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --disable-doc"
 build_external $EXTERNAL
 
 
 EXTERNAL=libgcrypt
 EXTERNAL_ADDRESS=git://git.gnupg.org/libgcrypt.git
 EXTERNAL_CMAKE=false
-EXTERNAL_CONFIGURE="cd /external/libgcrypt ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/"
+EXTERNAL_CONFIGURE="cd /external/libgcrypt ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --disable-doc"
 build_external $EXTERNAL
 
 function build_wayland
