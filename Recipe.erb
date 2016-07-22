@@ -231,6 +231,13 @@ EXTERNAL_CMAKE="${external_options[2]}"
 EXTERNAL_CONFIGURE="${external_options[3]}"
 build_external $EXTERNAL
 
+EXTERNAL=libgpg-error
+EXTERNAL_ADDRESS=git://git.gnupg.org/libgpg-error.git
+EXTERNAL_CMAKE=false
+EXTERNAL_CONFIGURE="cd /external/libgpg-error ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/"
+build_external $EXTERNAL
+
+
 EXTERNAL=libgcrypt
 EXTERNAL_ADDRESS=git://git.gnupg.org/libgcrypt.git
 EXTERNAL_CMAKE=false
