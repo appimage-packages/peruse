@@ -258,6 +258,16 @@ function build_wayland
     mkdir -p $SRC
     cd $SRC
 
+    # very old autoconf... fix that
+    export WLD=/app/usr/   # change this to another location if you prefer
+    export LD_LIBRARY_PATH=$WLD/lib
+    export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
+    export PATH=$WLD/bin:$PATH
+    export ACLOCAL_PATH=$WLD/share/aclocal
+    export ACLOCAL="aclocal -I $ACLOCAL_PATH"
+
+    mkdir -p $WLD/share/aclocal # needed by autotools
+
     #wayland
     git clone git://anongit.freedesktop.org/wayland/$WAYLAND
     cd $WAYLAND
