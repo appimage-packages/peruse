@@ -23,7 +23,7 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 . ./functions.sh
 rm -f functions.sh
 
-yum -y install gettext libSM-devel gpgme-devel perl-URI.noarch <%= depends %>
+yum -y install gettext pkgconfig libSM-devel gpgme-devel perl-URI.noarch <%= depends %>
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7
