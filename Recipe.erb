@@ -257,6 +257,12 @@ EXTERNAL_CMAKE=false
 EXTERNAL_CONFIGURE="cd /external/libgcrypt ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --enable-maintainer-mode --disable-doc"
 build_external $EXTERNAL
 
+EXTERNAL=poppler
+EXTERNAL_ADDRESS=git://git.freedesktop.org/git/poppler/poppler
+EXTERNAL_CMAKE=true
+EXTERNAL_CONFIGURE=
+build_external $EXTERNAL
+
 function build_wayland
 { (
  # errors fatal
