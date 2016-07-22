@@ -193,6 +193,14 @@ function build_external
     BUILD=/external/build
     PREFIX=/app/usr/
 
+    # very old autoconf... fix that
+    export WLD=/app/usr/   # change this to another location if you prefer
+    export LD_LIBRARY_PATH=$WLD/lib
+    export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
+    export PATH=$WLD/bin:$PATH
+    export ACLOCAL_PATH=$WLD/share/aclocal
+    export ACLOCAL="aclocal -I $ACLOCAL_PATH"
+
     # framework
     EXTERNAL=$1
 
@@ -240,14 +248,13 @@ build_external $EXTERNAL
 EXTERNAL=libgpg-error
 EXTERNAL_ADDRESS=git://git.gnupg.org/libgpg-error.git
 EXTERNAL_CMAKE=false
-EXTERNAL_CONFIGURE="cd /external/libgpg-error ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --disable-doc"
+EXTERNAL_CONFIGURE="cd /external/libgpg-error ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --enable-maintainer-mode --disable-doc"
 build_external $EXTERNAL
-
 
 EXTERNAL=libgcrypt
 EXTERNAL_ADDRESS=git://git.gnupg.org/libgcrypt.git
 EXTERNAL_CMAKE=false
-EXTERNAL_CONFIGURE="cd /external/libgcrypt ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --disable-doc"
+EXTERNAL_CONFIGURE="cd /external/libgcrypt ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --enable-maintainer-mode --disable-doc"
 build_external $EXTERNAL
 
 function build_wayland
@@ -271,7 +278,7 @@ function build_wayland
     export ACLOCAL_PATH=$WLD/share/aclocal
     export ACLOCAL="aclocal -I $ACLOCAL_PATH"
 
-    mkdir -p $WLD/share/aclocal # needed by autotools
+#     mkdir -p $WLD/share/aclocal # needed by autotools
 
     #wayland
     git clone git://anongit.freedesktop.org/wayland/$WAYLAND
