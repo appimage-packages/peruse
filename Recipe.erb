@@ -115,22 +115,23 @@ export ACLOCAL="aclocal -I $ACLOCAL_PATH"
 
 mkdir -p $WLD/share/aclocal # needed by autotools
 
+function build_gnutool
+{ (
+    wget http://ftp.gnu.org/gnu/$1/$1-$2.tar.gz
+    tar xvfvz $1-$2.tar.gz
+    cd $1-$2
+    ./configure --prefix=$WLD
+    make -j8
+    make install
+    cd ..
+) }
+
 #autoconf is too old on centos6
-wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
-tar xvfvz autoconf-2.69.tar.gz
-cd autoconf-2.69
-./configure --prefix=$WLD
-make -j8
-make install
-
+build_gnutool autoconf 2.69
 #automake is also too old on centos6
-wget http://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz
-tar xvfvz automake-1.15.tar.gz
-cd automake-1.15
-./configure --prefix=$WLD
-make -j8
-make install
-
+build_gnutool automake 1.15
+# ...and gettext
+build_gnutool gettext 0.19.8
 
 # start building the deps
 
