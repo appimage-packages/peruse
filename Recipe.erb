@@ -188,6 +188,19 @@ function build_external
     then
         cmake $SRC/$EXTERNAL -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX $2
     else
+        if ( $EXTERNAL_NEEDS_NEW_AUTOTOOLS )
+        then
+            cd $BUILD/$EXTERNAL
+            mkdir -p $BUILD/$EXTERNAL/share/aclocal # needed by autotools
+            #autoconf is too old on centos6
+            wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
+            tar xvfvz autoconf-2.69.tar.gz
+            cd autoconf-2.69
+            ./configure --prefix=$BUILD/$EXTERNAL
+            make -j8
+            make install
+            cd ..
+        fi
         eval "${EXTERNAL_CONFIGURE}"
     fi
     # make
@@ -207,6 +220,7 @@ build_external $EXTERNAL
 EXTERNAL=libgcrypt
 EXTERNAL_ADDRESS=git://git.gnupg.org/libgcrypt.git
 EXTERNAL_CMAKE=false
+EXTERNAL_NEEDS_NEW_AUTOTOOLS=true
 EXTERNAL_CONFIGURE="cd /external/libgcrypt ; ./autogen.sh --prefix=/app/usr/"
 build_external $EXTERNAL
 
