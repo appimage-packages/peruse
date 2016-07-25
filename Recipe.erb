@@ -23,7 +23,7 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 . ./functions.sh
 rm -f functions.sh
 
-yum -y install gettext libSM-devel perl-URI.noarch openjpeg-devel libjpeg-turbo-devel <%= depends %>
+yum -y install gettext libSM-devel texinfo perl-URI.noarch openjpeg-devel libjpeg-turbo-devel <%= depends %>
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7
