@@ -257,6 +257,12 @@ EXTERNAL_CMAKE=false
 EXTERNAL_CONFIGURE="cd /external/libgcrypt ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --enable-maintainer-mode --disable-doc"
 build_external $EXTERNAL
 
+EXTERNAL=libassuan
+EXTERNAL_ADDRESS=git://git.gnupg.org/libassuan.git
+EXTERNAL_CMAKE=false
+EXTERNAL_CONFIGURE="cd /external/libassuan ; ./autogen.sh --prefix=/app/usr/ ; ./configure --prefix=/app/usr/ --enable-maintainer-mode --disable-doc"
+build_external $EXTERNAL
+
 EXTERNAL=gpgme
 EXTERNAL_ADDRESS=git://git.gnupg.org/gpgme.git
 EXTERNAL_CMAKE=false
