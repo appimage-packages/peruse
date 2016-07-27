@@ -515,7 +515,8 @@ cp -r $QTDIR/qml/* ./usr/lib/qml/
 cp -ru /usr/share/mime/* /app/usr/share/mime
 update-mime-database /app/usr/share/mime/
 
-rsync -auxv --delete-after --progress ./usr/lib/plugins/ ./usr/lib/qt5/plugins/
+rsync -aruxv --progress ./usr/lib/plugins/ ./usr/lib/qt5/plugins/
+rm -rf ./usr/lib/plugins/
 
 
 copy_deps
