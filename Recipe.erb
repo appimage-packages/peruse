@@ -424,7 +424,30 @@ EOF
     cat set_boost.patch |patch -p1
     cd ..
     fi    
-    
+
+    if [ "$FRAMEWORK" = "okular" ]; then
+    cd $FRAMEWORK
+    echo "patching okular"
+    git reset --hard
+    cat > okular-disable-autotests.patch << 'EOF'
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index eb2008e..01ab817 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -75,7 +75,7 @@ endif()
+ add_subdirectory( ui )
+ add_subdirectory( shell )
+ add_subdirectory( generators )
+-add_subdirectory( autotests )
++# add_subdirectory( autotests )
+ add_subdirectory( conf/autotests )
+ 
+ add_subdirectory(doc)
+EOF
+    cat okular-disable-autotests.patch |patch -p1
+    cd ..
+    fi
+
     # create build dir
     mkdir -p $BUILD/$FRAMEWORK
 
