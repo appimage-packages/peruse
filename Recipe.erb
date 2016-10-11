@@ -275,6 +275,36 @@ EXTERNAL_CMAKE=true
 EXTERNAL_CONFIGURE=
 build_external $EXTERNAL
 
+
+function build_tarball_cmake
+{ (
+    SRC=/external
+    BUILD=/external/build
+    PREFIX=/app/usr/
+
+    mkdir -p $SRC
+    cd $SRC
+    wget $TARBALL_WGET
+    tar xvfvz $TARBALL_FILE
+    cd $TARBALL
+
+    # create build dir
+    mkdir -p $BUILD/$TARBALL
+
+    # go there
+    cd $BUILD/$TARBALL
+
+    cmake $SRC/$TARBALL -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX $2
+    make -j8
+    make install
+    cd ..
+) }
+
+TARBALL=ebook-tools-0.2.2
+TARBALL_FILE=ebook-tools-0.2.2.tar.gz
+TARBALL_WGET=http://downloads.sourceforge.net/project/ebook-tools/ebook-tools/0.2.2/ebook-tools-0.2.2.tar.gz
+build_tarball_cmake $TARBALL
+
 function build_wayland
 { (
  # errors fatal
@@ -490,7 +520,7 @@ build_framework kparts
 # build_framework kded
 # build_framework kemoticons
 # build_framework kitemmodels
-# build_framework kpty
+build_framework kpty
 # build_framework kdelibs4support
 # build_framework kparts
 build_framework threadweaver
