@@ -305,41 +305,41 @@ TARBALL_FILE=ebook-tools-0.2.2.tar.gz
 TARBALL_WGET=http://downloads.sourceforge.net/project/ebook-tools/ebook-tools/0.2.2/ebook-tools-0.2.2.tar.gz
 build_tarball_cmake $TARBALL
 
-# function build_wayland
-# { (
-#  # errors fatal
-#     echo "Compiler version:" $(g++ --version)
-#     set -e
-# 
-#     SRC=/wayland
-# 
-#     WAYLAND=$1
-#     # clone if not there
-#     mkdir -p $SRC
-#     cd $SRC
-# 
-#     # very old autoconf... fix that
-#     export WLD=/app/usr/   # change this to another location if you prefer
-#     export LD_LIBRARY_PATH=$WLD/lib
-#     export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
-#     export PATH=$WLD/bin:$PATH
-#     export ACLOCAL_PATH=$WLD/share/aclocal
-#     export ACLOCAL="aclocal -I $ACLOCAL_PATH"
-# 
-# #     mkdir -p $WLD/share/aclocal # needed by autotools
-# 
-#     #wayland
-#     git clone git://anongit.freedesktop.org/wayland/$WAYLAND
-#     cd $WAYLAND
-#     ./autogen.sh --prefix=$WLD
-#     make -j8
-#     make install
-#     cd .. 
-# ) }
-# if ( <%= wayland %> == true )
-# then
-#     build_wayland wayland
-# fi
+function build_wayland
+{ (
+ # errors fatal
+    echo "Compiler version:" $(g++ --version)
+    set -e
+
+    SRC=/wayland
+
+    WAYLAND=$1
+    # clone if not there
+    mkdir -p $SRC
+    cd $SRC
+
+    # very old autoconf... fix that
+    export WLD=/app/usr/   # change this to another location if you prefer
+    export LD_LIBRARY_PATH=$WLD/lib
+    export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
+    export PATH=$WLD/bin:$PATH
+    export ACLOCAL_PATH=$WLD/share/aclocal
+    export ACLOCAL="aclocal -I $ACLOCAL_PATH"
+
+#     mkdir -p $WLD/share/aclocal # needed by autotools
+
+    #wayland
+    git clone git://anongit.freedesktop.org/wayland/$WAYLAND
+    cd $WAYLAND
+    ./autogen.sh --prefix=$WLD
+    make -j8
+    make install
+    cd .. 
+) }
+if ( <%= wayland %> == true )
+then
+    build_wayland wayland
+fi
 
 # function build_boost
 # { (
