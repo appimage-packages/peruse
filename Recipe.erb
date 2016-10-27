@@ -305,65 +305,65 @@ TARBALL_FILE=ebook-tools-0.2.2.tar.gz
 TARBALL_WGET=http://downloads.sourceforge.net/project/ebook-tools/ebook-tools/0.2.2/ebook-tools-0.2.2.tar.gz
 build_tarball_cmake $TARBALL
 
-function build_wayland
-{ (
- # errors fatal
-    echo "Compiler version:" $(g++ --version)
-    set -e
+# function build_wayland
+# { (
+#  # errors fatal
+#     echo "Compiler version:" $(g++ --version)
+#     set -e
+# 
+#     SRC=/wayland
+# 
+#     WAYLAND=$1
+#     # clone if not there
+#     mkdir -p $SRC
+#     cd $SRC
+# 
+#     # very old autoconf... fix that
+#     export WLD=/app/usr/   # change this to another location if you prefer
+#     export LD_LIBRARY_PATH=$WLD/lib
+#     export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
+#     export PATH=$WLD/bin:$PATH
+#     export ACLOCAL_PATH=$WLD/share/aclocal
+#     export ACLOCAL="aclocal -I $ACLOCAL_PATH"
+# 
+# #     mkdir -p $WLD/share/aclocal # needed by autotools
+# 
+#     #wayland
+#     git clone git://anongit.freedesktop.org/wayland/$WAYLAND
+#     cd $WAYLAND
+#     ./autogen.sh --prefix=$WLD
+#     make -j8
+#     make install
+#     cd .. 
+# ) }
+# if ( <%= wayland %> == true )
+# then
+#     build_wayland wayland
+# fi
 
-    SRC=/wayland
-
-    WAYLAND=$1
-    # clone if not there
-    mkdir -p $SRC
-    cd $SRC
-
-    # very old autoconf... fix that
-    export WLD=/app/usr/   # change this to another location if you prefer
-    export LD_LIBRARY_PATH=$WLD/lib
-    export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
-    export PATH=$WLD/bin:$PATH
-    export ACLOCAL_PATH=$WLD/share/aclocal
-    export ACLOCAL="aclocal -I $ACLOCAL_PATH"
-
-#     mkdir -p $WLD/share/aclocal # needed by autotools
-
-    #wayland
-    git clone git://anongit.freedesktop.org/wayland/$WAYLAND
-    cd $WAYLAND
-    ./autogen.sh --prefix=$WLD
-    make -j8
-    make install
-    cd .. 
-) }
-if ( <%= wayland %> == true )
-then
-    build_wayland wayland
-fi
-
-function build_boost
-{ (
-     # errors fatal
-    echo "Compiler version:" $(g++ --version)
-    set -e
-
-    SRC=/boost
-
-    BOOST=$1
-    # clone if not there
-    mkdir -p $SRC
-    cd $SRC
-    
-    wget https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2
-    tar --bzip2 -xf boost_1_61_0.tar.bz2
-    cd boost_1_61_0
-    ./bootstrap.sh --prefix=/app/usr
-    ./b2 install
-) }
-if ( <%= boost %> == true )
-then
-    build_boost boost
-fi
+# function build_boost
+# { (
+#      # errors fatal
+#     echo "Compiler version:" $(g++ --version)
+#     set -e
+# 
+#     SRC=/boost
+# 
+#     BOOST=$1
+#     # clone if not there
+#     mkdir -p $SRC
+#     cd $SRC
+#     
+#     wget https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2
+#     tar --bzip2 -xf boost_1_61_0.tar.bz2
+#     cd boost_1_61_0
+#     ./bootstrap.sh --prefix=/app/usr
+#     ./b2 install
+# ) }
+# if ( <%= boost %> == true )
+# then
+#     build_boost boost
+# fi
 
 function build_framework
 { (
@@ -508,8 +508,8 @@ for FRAMEWORK in <%= frameworks %>; do
   build_framework $FRAMEWORK
 done
 build_framework breeze-icons -DBINARY_ICONS_RESOURCE=1
-build_framework kactivities -DBOOST_ROOT=/app/usr -DBoost_NO_SYSTEM_PATHS=ON
-build_framework plasma-framework
+# build_framework kactivities -DBOOST_ROOT=/app/usr -DBoost_NO_SYSTEM_PATHS=ON
+# build_framework plasma-framework
 
 # support for okular, and okular itself (for epub, pdf et al support)
 build_framework kjs
