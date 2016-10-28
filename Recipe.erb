@@ -275,13 +275,6 @@ EXTERNAL_CMAKE=true
 EXTERNAL_CONFIGURE=
 build_external $EXTERNAL
 
-EXTERNAL=kde-thumbnailer-epub
-EXTERNAL_ADDRESS=https://github.com/Caig/kde-thumbnailer-epub.git
-EXTERNAL_CMAKE=true
-EXTERNAL_CONFIGURE=
-build_external $EXTERNAL
-
-
 function build_tarball_cmake
 { (
     SRC=/external
@@ -539,6 +532,13 @@ build_framework okular branch frameworks
 build_framework kirigami
 
 build_framework knewstuff branch ui-business-split
+
+# This needs to be build down here, as it requires some frameworks... (specifically KArchive)
+EXTERNAL=kde-thumbnailer-epub
+EXTERNAL_ADDRESS=https://github.com/Caig/kde-thumbnailer-epub.git
+EXTERNAL_CMAKE=true
+EXTERNAL_CONFIGURE=
+build_external $EXTERNAL
 
     
 cd ..
