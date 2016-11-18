@@ -677,13 +677,16 @@ get_desktopintegration <%= name %>
 cd  /
 
 # Build AppImageKit
-if [ ! -d AppImageKit ] ; then
-  git clone  --depth 1 https://github.com/probonopd/AppImageKit.git /AppImageKit
-fi
-
 cd /AppImageKit/
-git_pull_rebase_helper
-./build.sh
+wget "https://github.com/probonopd/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+chmod a+x appimagetool-x86_64.AppImage
+# # if [ ! -d AppImageKit ] ; then
+#   git clone  --depth 1 https://github.com/probonopd/AppImageKit.git /AppImageKit
+# fi
+# 
+# cd /AppImageKit/
+# git_pull_rebase_helper
+# ./build.sh
 
 cd /
 
@@ -702,7 +705,7 @@ if [ -e /out/$APPIMAGEFILENAME ] ; then
   rm /out/$APPIMAGEFILENAME
 fi
 #TO-DO this will need some text manipulation in ruby to get this var.
-/AppImageKit/AppImageAssistant.AppDir/package <%= proper_name %>.AppDir/ /out/$APPIMAGEFILENAME
+/AppImageKit/appimagetool-x86_64.AppImage <%= proper_name %>.AppDir/ /out/$APPIMAGEFILENAME
 
 #Skip this. Cannot get it to work and I would rather the file local for now.
 #curl --progress-bar --upload-file - https://transfer.sh/$APPIMAGEFILENAME /out/$APPIMAGEFILENAME # Upload to transfer.io for testing
