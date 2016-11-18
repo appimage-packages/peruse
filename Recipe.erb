@@ -527,11 +527,11 @@ build_framework threadweaver
 build_framework kwallet
 build_framework phonon -DPHONON_BUILD_PHONON4QT5=ON
 build_framework khtml
-build_framework okular branch frameworks
+build_framework okular
 
 build_framework kirigami
 
-build_framework knewstuff branch ui-business-split
+build_framework knewstuff
 
 # This needs to be build down here, as it requires some frameworks... (specifically KArchive)
 EXTERNAL=kde-thumbnailer-epub
@@ -540,7 +540,7 @@ EXTERNAL_CMAKE=true
 EXTERNAL_CONFIGURE=
 build_external $EXTERNAL
 
-    
+
 cd ..
 
 # Build <%= name %>
