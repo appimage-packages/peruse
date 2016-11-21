@@ -70,7 +70,8 @@ class CI
         end
         @c.start('Binds' => ["/home/jenkins/workspace/appimage-peruse/:/in",
                              "/home/jenkins/workspace/appimage-peruse/out:/out",
-                             "/lib/modules:/lib/modules"])   
+                             "/lib/modules:/lib/modules",
+                             "/dev:/dev"])   
         ret = @c.wait
         status_code = ret.fetch('StatusCode', 1)
         raise "Bad return #{ret}" if status_code != 0
