@@ -58,7 +58,13 @@ class CI
               '/in' => {},
               '/out' => {},
               '/lib/modules' => {}
-            }
+           },
+           'HostConfig' => {
+           'CapAdd' => ["ALL"],
+           'Devices' => ['PathOnHost' => "/dev/fuse",
+                              'PathInContainer' => "/dev/fuse",
+                              'CgroupPermissions' => "mrw"]
+           }
         )
         p @c.info
         @log.info 'creating debug thread'
@@ -71,7 +77,7 @@ class CI
         @c.start('Binds' => ["/home/jenkins/workspace/appimage-peruse/:/in",
                              "/home/jenkins/workspace/appimage-peruse/out:/out",
                              "/lib/modules:/lib/modules",
-                             "/dev:/dev"])   
+                             "/dev:/dev"])
         ret = @c.wait
         status_code = ret.fetch('StatusCode', 1)
         raise "Bad return #{ret}" if status_code != 0
