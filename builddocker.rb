@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
-# 
+#
 # Copyright (C) 2016 Scarlett Clark <sgclark@kde.org>
 # Copyright (C) 2015-2016 Harald Sitter <sitter@kde.org>
 #
@@ -24,8 +24,8 @@ require 'docker'
 require 'logger'
 require 'logger/colors'
 
-class CI     
-    class Build        
+class CI
+    class Build
         def initialize()
             @image = ''
             @c = ''
@@ -39,24 +39,25 @@ class CI
 
         Thread.new do
             # :nocov:
-            Docker::Event.stream { |event| @log.debug event }        
+            Docker::Event.stream { |event| @log.debug event }
             # :nocov:
         end
-    end    
+    end
     attr_accessor :run
-    attr_accessor :cmd 
-    
+    attr_accessor :cmd
+
     Docker.options[:read_timeout] = 2 * 60 * 60 # 2 hours
     Docker.options[:write_timeout] = 2 * 60 * 60 # 2 hours
-        
+
    def create_container
         init_logging
         @c = Docker::Container.create(
-            'Image' => 'sgclark/centos6.8-qt5.7', 
+            'Image' => 'sgclark/centos6.8-qt5.7',
             'Cmd' => @cmd,
             'Volumes' => {
               '/in' => {},
-              '/out' => {}
+              '/out' => {},
+              '/lib/modules' => {}
             }
         )
         p @c.info
@@ -68,11 +69,11 @@ class CI
             end
         end
         @c.start('Binds' => ["/home/jenkins/workspace/appimage-peruse/:/in",
-                             "/home/jenkins/workspace/appimage-peruse/out:/out"])   
+                             "/home/jenkins/workspace/appimage-peruse/out:/out",
+                             "/lib/modules:/lib/modules"])   
         ret = @c.wait
         status_code = ret.fetch('StatusCode', 1)
         raise "Bad return #{ret}" if status_code != 0
-        @c.stop!   
-    end   
+        @c.stop!
+    end
 end
-
