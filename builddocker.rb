@@ -81,8 +81,7 @@ class CI
       'Binds' => [
         '/home/jenkins/workspace/appimage-peruse:/in',
         '/home/jenkins/workspace/appimage-peruse/out:/out',
-        '/lib/modules:/lib/modules',
-        '/dev/fuse:/dev/fuse'
+        '/lib/modules:/lib/modules'        
       ]
     )
     ret = @c.wait
