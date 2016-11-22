@@ -57,7 +57,8 @@ class CI
       'Volumes' => {
         '/in' => {},
         '/out' => {},
-        '/lib/modules' => {}
+        '/lib/modules' => {},
+        '/dev/fuse' => {}
       },
       'HostConfig' => {
         'CapAdd' => ['ALL'],
@@ -80,7 +81,8 @@ class CI
       'Binds' => [
         '/home/jenkins/workspace/appimage-peruse:/in',
         '/home/jenkins/workspace/appimage-peruse/out:/out',
-        '/lib/modules:/lib/modules'
+        '/lib/modules:/lib/modules',
+        '/dev/fuse:/dev/fuse'
       ]
     )
     ret = @c.wait
