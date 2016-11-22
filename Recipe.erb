@@ -23,8 +23,14 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 . ./functions.sh
 rm -f functions.sh
 
-yum -y install fuse rsync gettext libSM-devel texinfo giflib-devel perl-URI.noarch openjpeg-devel libjpeg-turbo-devel libzip-devel <%= depends %>
+yum -y install rsync gettext libSM-devel texinfo giflib-devel perl-URI.noarch openjpeg-devel libjpeg-turbo-devel libzip-devel <%= depends %>
 
+# We must build fuse..
+git clone https://github.com/libfuse/libfuse
+cd libfuse
+./configure
+make
+make install
 modprobe fuse
 
 QTVERSION=5.7.0
