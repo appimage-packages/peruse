@@ -18,6 +18,8 @@ set -x
 # Now we are inside CentOS 6
 grep -r "CentOS release 6" /etc/redhat-release || exit 1
 
+modprobe fuse
+
 # Get helper functions
 wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
 . ./functions.sh
@@ -76,17 +78,17 @@ index 19774fc..ae2a8a2 100644
 +++ b/src/qtquick/karchive-rar/external/CMakeLists.txt
 @@ -26,7 +26,7 @@ find_package(ZLIB)
  # find_package(BZip2)
- 
+
  if (UNIX OR MINGW)
 -    add_compile_options(-fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -fPIC)
 +    add_compile_options(-std=gnu99 -fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -fPIC)
  endif (UNIX OR MINGW)
- 
+
  #sources
 @@ -93,4 +93,4 @@ if (ZLIB_FOUND)
      add_definitions(-DHAVE_ZLIB)
  endif(ZLIB_FOUND)
- 
+
 -set_target_properties(unarr PROPERTIES C_STANDARD 99)
 +# set_target_properties(unarr PROPERTIES C_STANDARD 99)
 EOF
@@ -166,11 +168,11 @@ function build_cmake
         git clone https://github.com/Kitware/CMake
     fi
 
-    
+
     cd CMake
 
     ./bootstrap
-    
+
     # make
     make -j8
 
@@ -237,7 +239,7 @@ function build_external
     # install
     make install
 ) }
-IN=<%= external %> 
+IN=<%= external %>
 IFS=',' read -a external_options <<< $IN
 EXTERNAL="${external_options[0]}"
 EXTERNAL_ADDRESS="${external_options[1]}"
@@ -333,7 +335,7 @@ function build_wayland
     ./autogen.sh --prefix=$WLD
     make -j8
     make install
-    cd .. 
+    cd ..
 ) }
 if ( <%= wayland %> == true )
 then
@@ -352,7 +354,7 @@ function build_boost
     # clone if not there
     mkdir -p $SRC
     cd $SRC
-    
+
     wget https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2
     tar --bzip2 -xf boost_1_61_0.tar.bz2
     cd boost_1_61_0
@@ -408,7 +410,7 @@ function build_framework
     if [ "$FRAMEWORK" = "knotifications" ]; then
 	cd $FRAMEWORK
         echo "patching knotifications"
-	git reset --hard        
+	git reset --hard
 	cat > no_phonon.patch << 'EOF'
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index b97425f..8f15f08 100644
@@ -417,7 +419,7 @@ index b97425f..8f15f08 100644
 @@ -59,10 +59,10 @@ find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
  find_package(KF5Codecs ${KF5_DEP_VERSION} REQUIRED)
  find_package(KF5CoreAddons ${KF5_DEP_VERSION} REQUIRED)
- 
+
 -find_package(Phonon4Qt5 4.6.60 REQUIRED NO_MODULE)
 +find_package(Phonon4Qt5 4.6.60 NO_MODULE)
  set_package_properties(Phonon4Qt5 PROPERTIES
@@ -431,7 +433,7 @@ EOF
 	cat no_phonon.patch |patch -p1
 	cd ..
     fi
-    
+
     if [ "$FRAMEWORK" = "kactivities" ]; then
     cd $FRAMEWORK
         echo "patching kactivities"
@@ -452,7 +454,7 @@ index 81b5bdf..9a0c72b 100644
 EOF
     cat set_boost.patch |patch -p1
     cd ..
-    fi    
+    fi
 
     if [ "$FRAMEWORK" = "okular" ]; then
     cd $FRAMEWORK
@@ -470,7 +472,7 @@ index eb2008e..01ab817 100644
 -add_subdirectory( autotests )
 +# add_subdirectory( autotests )
  add_subdirectory( conf/autotests )
- 
+
  add_subdirectory(doc)
 EOF
     cat okular-disable-autotests.patch |patch -p1
@@ -636,7 +638,7 @@ cp -v /appimage-exec-wrapper/exec.so exec_wrapper.so
 cat > AppRun << EOF
 #!/bin/bash
 
-DIR="\`dirname \"\$0\"\`" 
+DIR="\`dirname \"\$0\"\`"
 DIR="\`( cd \"\$DIR\" && pwd )\`"
 export APPDIR=\$DIR
 
@@ -684,7 +686,7 @@ chmod a+x appimagetool-x86_64.AppImage
 # # if [ ! -d AppImageKit ] ; then
 #   git clone  --depth 1 https://github.com/probonopd/AppImageKit.git /AppImageKit
 # fi
-# 
+#
 # cd /AppImageKit/
 # git_pull_rebase_helper
 # ./build.sh

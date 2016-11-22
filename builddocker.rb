@@ -49,38 +49,42 @@ class CI
     Docker.options[:read_timeout] = 2 * 60 * 60 # 2 hours
     Docker.options[:write_timeout] = 2 * 60 * 60 # 2 hours
 
-   def create_container
-        init_logging
-        @c = Docker::Container.create(
-            'Image' => 'sgclark/centos6.8-qt5.7',
-            'Cmd' => @cmd,
-            'Volumes' => {
-              '/in' => {},
-              '/out' => {},
-              '/lib/modules' => {}
-           },
-           'HostConfig' => {
-           'CapAdd' => ["ALL"],
-           'Devices' => ['PathOnHost' => "/dev/fuse",
-                              'PathInContainer' => "/dev/fuse",
-                              'CgroupPermissions' => "mrw"]
-           }
-        )
-        p @c.info
-        @log.info 'creating debug thread'
-        Thread.new do
-            @c.attach do |_stream, chunk|
-                puts chunk
-                STDOUT.flush
-            end
-        end
-        @c.start('Binds' => ["/home/jenkins/workspace/appimage-peruse/:/in",
-                             "/home/jenkins/workspace/appimage-peruse/out:/out",
-                             "/lib/modules:/lib/modules",
-                             "/dev:/dev"])
-        ret = @c.wait
-        status_code = ret.fetch('StatusCode', 1)
-        raise "Bad return #{ret}" if status_code != 0
-        @c.stop!
+  def create_container
+    init_logging
+    @c = Docker::Container.create(
+      'Image' => 'sgclark/centos6.8-qt5.7',
+      'Cmd' => @cmd,
+      'Volumes' => {
+        '/in' => {},
+        '/out' => {},
+        '/lib/modules' => {}
+      },
+      'HostConfig' => {
+        'CapAdd' => ['ALL'],
+        'Devices' => [
+          'PathOnHost' => '/dev/fuse',
+          'PathInContainer' => '/dev/fuse',
+          'CgroupPermissions' => 'mrw'
+        ]
+      }
+    )
+    @log.info 'creating debug thread'
+    Thread.new do
+      @c.attach do |_stream, chunk|
+        puts chunk
+        STDOUT.flush
+      end
     end
+    @c.start(
+      'Privileged' => true,
+      'Binds' => [
+        '/home/jenkins/workspace/appimage-peruse/:/in',
+        '/home/jenkins/workspace/appimage-peruse/out:/out'
+      ]
+    )
+    ret = @c.wait
+    status_code = ret.fetch('StatusCode', 1)
+    raise "Bad return #{ret}" if status_code.nonzero?
+    @c.stop!
+  end
 end
