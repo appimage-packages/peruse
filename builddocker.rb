@@ -56,9 +56,7 @@ class CI
       'Cmd' => @cmd,
       'Volumes' => {
         '/in' => {},
-        '/out' => {},
-        '/lib/modules' => {},
-        '/dev/fuse' => {}
+        '/out' => {}
       },
       'HostConfig' => {
         'CapAdd' => ['ALL'],
