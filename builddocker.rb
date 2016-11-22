@@ -79,7 +79,8 @@ class CI
       'Privileged' => false,
       'Binds' => [
         '/home/jenkins/workspace/appimage-peruse:/in',
-        '/home/jenkins/workspace/appimage-peruse/out:/out'
+        '/home/jenkins/workspace/appimage-peruse/out:/out',
+        '/lib/modules:/lib/modules'
       ]
     )
     ret = @c.wait
