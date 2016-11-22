@@ -24,30 +24,30 @@ require 'docker'
 require 'logger'
 require 'logger/colors'
 
+# Create and run a container on the CI build node.
 class CI
-    class Build
-        def initialize()
-            @image = ''
-            @c = ''
-            @binds = ''
-        end
+  # Container creation and run
+  class Build
+    def initialize()
+      @image = ''
+      @c = ''
+      @binds = ''
+      @cmd
     end
-    def init_logging
-        @log = Logger.new(STDERR)
-
-        raise 'Could not initialize logger' if @log.nil?
-
-        Thread.new do
-            # :nocov:
-            Docker::Event.stream { |event| @log.debug event }
-            # :nocov:
-        end
+  end
+  def init_logging
+    @log = Logger.new(STDERR)
+    raise 'Could not initialize logger' if @log.nil?
+    Thread.new do
+      # :nocov:
+      Docker::Event.stream { |event| @log.debug event }
+      # :nocov:
     end
-    attr_accessor :run
-    attr_accessor :cmd
-
-    Docker.options[:read_timeout] = 2 * 60 * 60 # 2 hours
-    Docker.options[:write_timeout] = 2 * 60 * 60 # 2 hours
+  end
+  attr_accessor :run
+  attr_accessor :cmd
+  Docker.options[:read_timeout] = 2 * 60 * 60 # 2 hours
+  Docker.options[:write_timeout] = 2 * 60 * 60 # 2 hours
 
   def create_container
     init_logging
@@ -76,9 +76,9 @@ class CI
       end
     end
     @c.start(
-      'Privileged' => true,
+      'Privileged' => false,
       'Binds' => [
-        '/home/jenkins/workspace/appimage-peruse/:/in',
+        '/home/jenkins/workspace/appimage-peruse:/in',
         '/home/jenkins/workspace/appimage-peruse/out:/out'
       ]
     )
