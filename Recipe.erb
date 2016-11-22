@@ -18,14 +18,14 @@ set -x
 # Now we are inside CentOS 6
 grep -r "CentOS release 6" /etc/redhat-release || exit 1
 
-modprobe fuse
-
 # Get helper functions
 wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
 . ./functions.sh
 rm -f functions.sh
 
 yum -y install fuse rsync gettext libSM-devel texinfo giflib-devel perl-URI.noarch openjpeg-devel libjpeg-turbo-devel libzip-devel <%= depends %>
+
+modprobe fuse
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7

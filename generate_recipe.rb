@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
-# 
+#
 # Copyright (C) 2016 Scarlett Clark <sgclark@kde.org>
 # Copyright (C) 2015-2016 Harald Sitter <sitter@kde.org>
 #
@@ -24,10 +24,10 @@ require 'erb'
 class Recipe
     class App
         def initialize(name)
-            @name = name                
+            @name = name
         end
     end
-    
+
     attr_accessor :name
     attr_accessor :proper_name
     attr_accessor :depends
@@ -41,7 +41,7 @@ class Recipe
     attr_accessor :frameworks
     attr_accessor :external
     attr_accessor :apps
-        
+
     def render
         ERB.new(File.read('Recipe.erb')).result(binding)
     end
@@ -53,7 +53,8 @@ appimage.proper_name = appimage.name.capitalize
 appimage.version = '16.04.1'
 appimage.cmake = true
 #TO_DO do some LD magic here? kdev-tools cmake parser?
-appimage.depends = 'zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto libXcursor-devel python-devel libxml2-devel bzip2-devel libxslt-devel xz-devel'
+appimage.depends = 'zlib-devel polkit-devel libattr-devel lmdb-devel libffi-devel expat-devel doxygen xmlto \
+  libXcursor-devel python-devel libxml2-devel bzip2-devel libxslt-devel xz-devel fuse dkms dkms-fuse fuse-devel'
 #Needed to add ability to pull in external builds that are simply to old
 #in Centos.
 appimage.external = 'libarchive,https://github.com/libarchive/libarchive,true,""'
