@@ -29,10 +29,13 @@ yum -y install rsync gettext libSM-devel texinfo giflib-devel perl-URI.noarch op
 wget https://github.com/libfuse/libfuse/releases/download/fuse-3.0.0-rc2/fuse-3.0.0rc2.tar.gz
 tar -zxvf fuse-3.0.0rc2.tar.gz
 cd fuse-3.0.0rc2
-./configure
+./configure --prefix=/usr
 make
 make install
-#modprobe fuse
+
+usermod -a -G fuse root
+chgrp fuse /dev/fuse
+ls -l /dev/fuse
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7
