@@ -60,7 +60,7 @@ class CI
         '/lib/modules' => {}
       },
       'HostConfig' => {
-        'Binds' => '/tmp:/tmp',
+        'Binds' => ['/tmp:/tmp'],
         'UsernsMode' => 'host',
         'Privileged' => true,
         'Devices' => [
