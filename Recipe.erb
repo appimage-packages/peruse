@@ -35,7 +35,7 @@ make install
 
 usermod -a -G fuse root
 #chgrp fuse /dev/fuse
-ls -l /dev/fuse
+ls -l /
 
 QTVERSION=5.7.0
 QVERSION_SHORT=5.7
@@ -720,8 +720,9 @@ fi
 #TO-DO this will need some text manipulation in ruby to get this var.
 mksquashfs <%= proper_name %>.AppDir <%= proper_name %>.squashfs -root-owned -noappend
 cat /in/runtime >> <%= proper_name %>.AppImage
-cat <%= proper_name %>.squashfs >> /out/$APPIMAGEFILENAME
-chmod a+x /out/$APPIMAGEFILENAME
+cat <%= proper_name %>.squashfs >> $APPIMAGEFILENAME
+chmod a+x $APPIMAGEFILENAME
+mv $APPIMAGEFILENAME /out/
 #/AppImageKit/appimagetool-x86_64.AppImage <%= proper_name %>.AppDir/ /out/$APPIMAGEFILENAME
 
 #Skip this. Cannot get it to work and I would rather the file local for now.
