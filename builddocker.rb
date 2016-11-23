@@ -54,7 +54,7 @@ class CI
     @c = Docker::Container.create(
       'Image' => 'sgclark/centos6.8-qt5.7',
       'Cmd' => @cmd,
-      'Mounts' => {
+      'Volumes' => {
         '/in' => {},
         '/out' => {},
         '/lib/modules' => {}
