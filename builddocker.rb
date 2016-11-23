@@ -60,6 +60,7 @@ class CI
         '/lib/modules' => {}
       },
       'HostConfig' => {
+        'UsernsMode' => 'host',
         'Privileged' => true,
         'Devices' => [
           'PathOnHost' => '/dev/fuse',
