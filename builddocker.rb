@@ -61,7 +61,7 @@ class CI
       },
       'HostConfig' => {
         'CapAdd' => ['ALL'],
-      #  'Privileged' => true,
+        'Privileged' => false,
         'Security-Opt' => ['apparmor:unconfined'],
         'Devices' => [
           'PathOnHost' => '/dev/fuse',
