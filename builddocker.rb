@@ -60,7 +60,12 @@ class CI
         '/lib/modules' => {}
       },
       'HostConfig' => {
-        'Binds' => ['/tmp:/tmp'],
+        'Binds' => [
+          '/tmp:/tmp',
+          '/home/jenkins/workspace/appimage-peruse:/in',
+          '/home/jenkins/workspace/appimage-peruse/out:/out',
+          '/lib/modules:/lib/modules, ro'
+        ],
         'UsernsMode' => 'host',
         'Privileged' => true,
         'Devices' => [
@@ -77,13 +82,7 @@ class CI
         STDOUT.flush
       end
     end
-    @c.start(
-      'Volumes' => [
-        '/home/jenkins/workspace/appimage-peruse:/in',
-        '/home/jenkins/workspace/appimage-peruse/out:/out',
-        '/lib/modules:/lib/modules, ro'
-      ]
-    )
+    @c.start()
     ret = @c.wait
     status_code = ret.fetch('StatusCode', 1)
     raise "Bad return #{ret}" if status_code.nonzero?
