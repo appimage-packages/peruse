@@ -60,8 +60,7 @@ class CI
         '/lib/modules' => {}
       },
       'HostConfig' => {
-        'CapAdd' => ['MKNOD'],
-        'CapAdd' => ['SYS_ADMIN'],
+        'CapAdd' => ['ALL'],
         'Privileged' => true,
         'Security-Opt' => ['apparmor:unconfined'],
         'Devices' => [
