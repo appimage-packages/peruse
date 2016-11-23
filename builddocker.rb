@@ -54,14 +54,15 @@ class CI
     @c = Docker::Container.create(
       'Image' => 'sgclark/centos6.8-qt5.7',
       'Cmd' => @cmd,
-      'Volumes' => {
+      'Mounts' => {
         '/in' => {},
         '/out' => {},
         '/lib/modules' => {}
       },
       'HostConfig' => {
-        'CapAdd' => ['mknod'],
-        'CapAdd' => ['sys_admin'],
+        'CapAdd' => ['MKNOD'],
+        'CapAdd' => ['SYS_ADMIN'],
+        'Privileged' => true,
         'Security-Opt' => ['apparmor:unconfined'],
         'Devices' => [
           'PathOnHost' => '/dev/fuse',
@@ -78,12 +79,12 @@ class CI
       end
     end
     @c.start(
-      'Privileged' => false,
-      'Binds' => [
+      'Volumes' => [
         '/home/jenkins/workspace/appimage-peruse:/in',
         '/home/jenkins/workspace/appimage-peruse/out:/out',
         '/lib/modules:/lib/modules'
-      ]
+      ],
+      'Binds' => '/tmp:/tmp'
     )
     ret = @c.wait
     status_code = ret.fetch('StatusCode', 1)
