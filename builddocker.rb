@@ -60,6 +60,7 @@ class CI
         '/lib/modules' => {}
       },
       'HostConfig' => {
+        'Binds' => '/tmp:/tmp',
         'UsernsMode' => 'host',
         'Privileged' => true,
         'Devices' => [
@@ -81,8 +82,7 @@ class CI
         '/home/jenkins/workspace/appimage-peruse:/in',
         '/home/jenkins/workspace/appimage-peruse/out:/out',
         '/lib/modules:/lib/modules, ro'
-      ],
-      'Binds' => '/tmp:/tmp'
+      ]
     )
     ret = @c.wait
     status_code = ret.fetch('StatusCode', 1)
