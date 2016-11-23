@@ -57,11 +57,12 @@ class CI
       'Volumes' => {
         '/in' => {},
         '/out' => {},
-        '/lib/modules' => {},
-        '/dev/fuse' => {}
+        '/lib/modules' => {}
       },
       'HostConfig' => {
-        'CapAdd' => ['ALL'],
+        'CapAdd' => ['mknod'],
+        'CapAdd' => ['sys_admin'],
+        'Security-Opt' => ['apparmor:unconfined'],
         'Devices' => [
           'PathOnHost' => '/dev/fuse',
           'PathInContainer' => '/dev/fuse',
@@ -81,7 +82,7 @@ class CI
       'Binds' => [
         '/home/jenkins/workspace/appimage-peruse:/in',
         '/home/jenkins/workspace/appimage-peruse/out:/out',
-        '/lib/modules:/lib/modules'        
+        '/lib/modules:/lib/modules'
       ]
     )
     ret = @c.wait
