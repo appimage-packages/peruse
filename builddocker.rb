@@ -60,9 +60,7 @@ class CI
         '/lib/modules' => {}
       },
       'HostConfig' => {
-        'CapAdd' => ['ALL'],
-        'Privileged' => false,
-        'Security-Opt' => ['apparmor:unconfined'],
+        'Privileged' => true,
         'Devices' => [
           'PathOnHost' => '/dev/fuse',
           'PathInContainer' => '/dev/fuse',
@@ -81,7 +79,7 @@ class CI
       'Volumes' => [
         '/home/jenkins/workspace/appimage-peruse:/in',
         '/home/jenkins/workspace/appimage-peruse/out:/out',
-        '/lib/modules:/lib/modules'
+        '/lib/modules:/lib/modules, ro'
       ],
       'Binds' => '/tmp:/tmp'
     )
