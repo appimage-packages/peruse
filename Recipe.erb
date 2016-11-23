@@ -718,7 +718,11 @@ if [ -e /out/$APPIMAGEFILENAME ] ; then
   rm /out/$APPIMAGEFILENAME
 fi
 #TO-DO this will need some text manipulation in ruby to get this var.
-/AppImageKit/appimagetool-x86_64.AppImage <%= proper_name %>.AppDir/ /out/$APPIMAGEFILENAME
+mksquashfs <%= proper_name %>.AppDir <%= proper_name %>.squashfs -root-owned -noappend
+cat runtime >> <%= proper_name %>.AppImage
+cat <%= proper_name %>.squashfs >> /out/$APPIMAGEFILENAME
+chmod a+x /out/$APPIMAGEFILENAME
+#/AppImageKit/appimagetool-x86_64.AppImage <%= proper_name %>.AppDir/ /out/$APPIMAGEFILENAME
 
 #Skip this. Cannot get it to work and I would rather the file local for now.
 #curl --progress-bar --upload-file - https://transfer.sh/$APPIMAGEFILENAME /out/$APPIMAGEFILENAME # Upload to transfer.io for testing
