@@ -26,9 +26,9 @@ rm -f functions.sh
 yum -y install squashfs-tools rsync gettext libSM-devel texinfo giflib-devel perl-URI.noarch openjpeg-devel libjpeg-turbo-devel libzip-devel <%= depends %>
 
 # We must build fuse..
-wget https://github.com/libfuse/libfuse/releases/download/fuse-3.0.0-rc2/fuse-3.0.0rc2.tar.gz
-tar -zxvf fuse-3.0.0rc2.tar.gz
-cd fuse-3.0.0rc2
+wget https://github.com/libfuse/libfuse/releases/download/fuse-3.0.0/fuse-3.0.0.tar.gz
+tar -zxvf fuse-3.0.0.tar.gz
+cd fuse-3.0.0
 ./configure --prefix=/usr
 make
 make install
