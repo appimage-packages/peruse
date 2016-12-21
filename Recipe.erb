@@ -691,8 +691,8 @@ cd  /
 # Build AppImageKit
 mkdir /AppImageKit
 cd /AppImageKit
-wget "https://github.com/probonopd/AppImageKit/releases/download/continuous/appimagetool-i686.AppImage"
-chmod a+x appimagetool-i686.AppImage
+wget "https://github.com/probonopd/AppImageKit/releases/download/knowngood/appimagetool-x86_64.AppImage"
+chmod a+x appimagetool-x86_64.AppImage
 # # if [ ! -d AppImageKit ] ; then
 #   git clone  --depth 1 https://github.com/probonopd/AppImageKit.git /AppImageKit
 # fi
@@ -723,7 +723,7 @@ fi
 # cat <%= proper_name %>.squashfs >> $APPIMAGEFILENAME
 # chmod a+x $APPIMAGEFILENAME
 # mv $APPIMAGEFILENAME /out/
- /AppImageKit/appimagetool-i686.AppImage <%= proper_name %>.AppDir/ /out/$APPIMAGEFILENAME
+ /AppImageKit/appimagetool-x86_64.AppImage <%= proper_name %>.AppDir/ /out/$APPIMAGEFILENAME
 
 #Skip this. Cannot get it to work and I would rather the file local for now.
 #curl --progress-bar --upload-file - https://transfer.sh/$APPIMAGEFILENAME /out/$APPIMAGEFILENAME # Upload to transfer.io for testing
